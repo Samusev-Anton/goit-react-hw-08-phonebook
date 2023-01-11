@@ -11,7 +11,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/goit-react-hw-07-phonebook">
+    <BrowserRouter basename="/goit-react-hw-08-phonebook">
       <ThemeProvider theme={theme}>
         <Global styles={GlobalStyles} />
         <Provider store={store}>
