@@ -7,7 +7,7 @@ import {
   toastError,
 } from 'components/services/toasts';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:3030';
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -19,10 +19,12 @@ export const clearAuthHeader = () => {
 export const registerUser = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
+    console.log(credentials);
     try {
       const res = await axios.post('/users/signup', credentials);
       toastSuccessRegister();
-      setAuthHeader(res.data.token);
+      // setAuthHeader(res.data.token);
+      console.log(res.data.user);
       return res.data;
     } catch (error) {
       toastError();
@@ -35,10 +37,11 @@ export const logInUser = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/login', credentials);
+      const res = await axios.post('/users/signin', credentials);
       toastSuccessLogIn();
-      setAuthHeader(res.data.token);
-      return res.data;
+      setAuthHeader(res.data.user.token);
+      console.log(res.data.user);
+      return res.data.user;
     } catch (error) {
       toastError();
       return thunkAPI.rejectWithValue(error);
@@ -50,7 +53,7 @@ export const logOutUser = createAsyncThunk(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      await axios.post('/users/logout');
+      await axios.get('/users/logout');
       toastSuccessLogOut();
       clearAuthHeader();
     } catch (error) {
@@ -76,5 +79,44 @@ export const refreshUser = createAsyncThunk(
       toastError();
       return thunkAPI.rejectWithValue(error.message);
     }
+  }
+);
+
+export const VerifyEmail = createAsyncThunk(
+  'auth/verifyEmail',
+  async (verifyToken, thunkAPI) => {
+    try {
+      const data = await axios.patch(`/users/verify/${verifyToken}`, {
+        verify: true,
+        verificationToken: null,
+      });
+      console.log(data);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const SendMailPassword = createAsyncThunk(
+  'auth/SendMailPassword',
+  async (email, thunkAPI) => {
+    try {
+      const data = await axios.get(`/users/${email}`);
+      console.log(data.data);
+      return data.data.temporaryPassword;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  'auth/changePassword',
+  async (password, thunkAPI) => {
+    try {
+      const user = await axios.patch('/users/password', password);
+      return user;
+    } catch (error) {}
   }
 );

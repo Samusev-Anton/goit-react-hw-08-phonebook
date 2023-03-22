@@ -1,43 +1,37 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/selector';
-import { addNewContact } from 'redux/operations/contactsOperations';
+import { useDispatch } from 'react-redux';
+import { changeContact } from 'redux/operations/contactsOperations';
+
 import {
   ClassicFormStyle,
   ClassicLabelForm,
   ClassicInputForm,
   ClassicButton,
 } from 'components/GlobalStyles';
-import { toastWarnDuplicate } from 'components/services/toasts';
+
 import {
   PersonIconStyle,
   LocalPhoneIconStyle,
 } from 'components/icons/icons.styled';
 import AddIcCallIcon from '@mui/icons-material/AddIcCall';
+import CancelIcon from '@mui/icons-material/Cancel';
 
-export const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [email, setEmail] = useState('');
+export const ChangeContactForm = ({ changedContact, isCloseModal }) => {
+  const [name, setName] = useState(changedContact.name);
+  const [number, setNumber] = useState(changedContact.phone);
+  const [email, setEmail] = useState(changedContact.email);
 
-  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const onSubmitForm = event => {
     event.preventDefault();
-    const checkContact = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-    if (checkContact === true) {
-      reset();
-      return toastWarnDuplicate(name);
-    }
     const newContact = {
+      id: changedContact._id,
       name,
       phone: number,
       email,
     };
-    dispatch(addNewContact(newContact));
+    dispatch(changeContact(newContact));
     reset();
   };
   const reset = () => {
@@ -48,9 +42,10 @@ export const ContactForm = () => {
 
   return (
     <ClassicFormStyle onSubmit={onSubmitForm}>
-      <ClassicLabelForm>
+      <ClassicLabelForm style={{ color: 'black' }}>
         Name
         <ClassicInputForm
+          onClick={event => setName('')}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -61,9 +56,10 @@ export const ContactForm = () => {
         />
         <PersonIconStyle />
       </ClassicLabelForm>
-      <ClassicLabelForm>
+      <ClassicLabelForm style={{ color: 'black' }}>
         Email
         <ClassicInputForm
+          onClick={event => setName('')}
           type="text"
           name="email"
           // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -75,9 +71,10 @@ export const ContactForm = () => {
         <PersonIconStyle />
       </ClassicLabelForm>
 
-      <ClassicLabelForm>
+      <ClassicLabelForm style={{ color: 'black' }}>
         Number
         <ClassicInputForm
+          onClick={event => setName('')}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -88,9 +85,17 @@ export const ContactForm = () => {
         />
         <LocalPhoneIconStyle />
       </ClassicLabelForm>
-      <ClassicButton type="submit">
-        Add contact
+      <ClassicButton type="submit" onClick={isCloseModal}>
+        Change contact
         <AddIcCallIcon sx={{ marginLeft: '5px' }} />
+      </ClassicButton>
+      <ClassicButton
+        type="button"
+        onClick={isCloseModal}
+        style={{ marginTop: '10px' }}
+      >
+        Exit without changes
+        <CancelIcon sx={{ marginLeft: '5px' }} />
       </ClassicButton>
     </ClassicFormStyle>
   );

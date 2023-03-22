@@ -4,7 +4,6 @@ import {
   deleteContact,
 } from '../operations/contactsOperations';
 
-
 const actions = [fetchContacts, addNewContact, deleteContact];
 
 export const getActions = type => actions.map(action => action[type]);
@@ -22,6 +21,15 @@ export const handleDeleteContact = (state, action) => {
   state.items.splice(idx, 1);
 };
 
+export const handleToFavorite = (state, action) => {
+  const index = state.items.findIndex(item => item._id === action.payload._id);
+  state.items.splice(index, 1, action.payload);
+};
+
+export const handleChangeContact = (state, action) => {
+  const index = state.items.findIndex(item => item._id === action.payload._id);
+  state.items.splice(index, 1, action.payload);
+};
 
 export const anyPendingReducer = state => {
   state.isLoading = true;

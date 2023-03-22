@@ -9,17 +9,19 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   return (
-    <LabelFilter>
-      Find contacts by name
-      <InputFilter
-        type="text"
-        name="filter"
-        title="The ability to filter the contact book"
-        required
-        value={filter}
-        onChange={event => dispatch(setFilter(event.target.value))}
-      />
-      <SearchIconStyle />
-    </LabelFilter>
+    <>
+      <LabelFilter>
+        Find contacts by name
+        <InputFilter
+          type="text"
+          name="filter"
+          title="The ability to filter the contact book"
+          required
+          value={filter}
+          onChange={event => dispatch(setFilter(event.target.value))}
+        />
+        <SearchIconStyle />
+      </LabelFilter>
+    </>
   );
 };

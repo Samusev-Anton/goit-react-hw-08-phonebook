@@ -11,6 +11,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { FooterLink } from 'components/Footer/Footer.styled';
+import LockResetIcon from '@mui/icons-material/LockReset';
 
 const iconStyle = {
   position: 'absolute',
@@ -29,6 +30,8 @@ export const PersonIconStyle = () => <PersonIcon sx={{ ...iconStyle }} />;
 export const LocalPhoneIconStyle = () => (
   <LocalPhoneIcon sx={{ ...iconStyle }} />
 );
+
+export const TempPasswordIcon = () => <LockResetIcon sx={{ ...iconStyle }} />;
 
 export const SearchIconStyle = () => <SearchIcon sx={{ ...iconStyle }} />;
 

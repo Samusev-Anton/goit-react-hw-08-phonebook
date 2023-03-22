@@ -211,6 +211,20 @@ export const ClassicButton = styled.button`
     color: ${p => p.theme.colors.almostDarkGreen};
     background-color: ${p => p.theme.colors.maybeYellow};
   }
+  &:disabled {
+    background-color: -internal-light-dark(
+      rgba(239, 239, 239, 0.3),
+      rgba(19, 1, 1, 0.3)
+    );
+    color: -internal-light-dark(
+      rgba(16, 16, 16, 0.3),
+      rgba(255, 255, 255, 0.3)
+    );
+    border-color: -internal-light-dark(
+      rgba(118, 118, 118, 0.3),
+      rgba(195, 195, 195, 0.3)
+    );
+  }
 `;
 
 export const ErrorSection = styled.section`

@@ -16,8 +16,11 @@ export const selectFilteredContacts = createSelector(
     );
   }
 );
+export const tempPassword = state => state.user.temporaryPassword;
 
 export const selectUser = state => state.user.user;
+
+export const verifyToken = state => state.user.user.verificationToken;
 
 export const selectIsLoggedIn = state => state.user.isLoggedIn;
 

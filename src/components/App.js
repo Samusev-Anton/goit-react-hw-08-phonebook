@@ -7,6 +7,7 @@ import { Layout } from './Layout';
 import { Home } from 'pages/Home';
 import { Register } from 'pages/Register';
 import { Login } from 'pages/Login';
+import { VerifyUser } from 'pages/VerifyEmail';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
 
@@ -15,7 +16,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import img from 'components/images/404-Error-Websites.jpg';
 import { Error } from './Error';
-
 
 const Contacts = lazy(() =>
   import('../pages/Contacts').then(module => ({
@@ -36,6 +36,8 @@ export const App = () => {
     };
   }, [dispatch]);
 
+  // const verify = useSelector(verifyToken);
+
   return (
     !isRefreshing && (
       <>
@@ -51,10 +53,7 @@ export const App = () => {
             <Route
               path="/register"
               element={
-                <RestrictedRoute
-                  redirectTo="/contacts"
-                  component={<Register />}
-                />
+                <RestrictedRoute redirectTo="/login" component={<Register />} />
               }
             />
             <Route
@@ -63,6 +62,7 @@ export const App = () => {
                 <RestrictedRoute redirectTo="/contacts" component={<Login />} />
               }
             />
+            <Route path="/verify/:verifyToken" element={<VerifyUser />} />
             <Route path="*" element={<Error errorImg={img} />} />
           </Route>
         </Routes>

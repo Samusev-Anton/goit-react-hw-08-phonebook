@@ -6,14 +6,14 @@ import {
   toastError,
 } from 'components/services/toasts';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:3030/api';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkApi) => {
     try {
       const contacts = await axios.get('/contacts');
-      return contacts.data;
+      return contacts.data.data;
     } catch (error) {
       toastError();
       return thunkApi.rejectWithValue(error);
@@ -24,10 +24,12 @@ export const fetchContacts = createAsyncThunk(
 export const addNewContact = createAsyncThunk(
   'contacts/addNewContact',
   async (credentials, thunkApi) => {
+    console.log(credentials);
     try {
       const contacts = await axios.post('/contacts', credentials);
       toastSuccessAdd();
-      return contacts.data;
+      console.log(contacts.data.data);
+      return contacts.data.data;
     } catch (error) {
       toastError();
       return thunkApi.rejectWithValue(error);
@@ -42,6 +44,44 @@ export const deleteContact = createAsyncThunk(
       const contacts = await axios.delete(`/contacts/${id}`);
       toastSuccessDelete();
       return contacts.data;
+    } catch (error) {
+      toastError();
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const addToFavorite = createAsyncThunk(
+  'contacts/addToFavorite',
+  async (filteredContact, thunkApi) => {
+    try {
+      const contacts = await axios.patch(
+        `/contacts/${filteredContact._id}/favorite`,
+        {
+          favorite: !filteredContact.favorite,
+        }
+      );
+      return contacts.data.data;
+    } catch (error) {
+      toastError();
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const changeContact = createAsyncThunk(
+  'contacts/changeContact',
+  async (contact, thunkApi) => {
+    console.log(contact.id);
+    try {
+      const contacts = await axios.patch(`/contacts/${contact.id}`, {
+        name: contact.name,
+        phone: contact.phone,
+        email: contact.email,
+      });
+      toastSuccessAdd();
+      console.log(contacts.data.data);
+      return contacts.data.data;
     } catch (error) {
       toastError();
       return thunkApi.rejectWithValue(error);

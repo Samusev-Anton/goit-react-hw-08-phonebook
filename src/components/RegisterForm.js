@@ -35,7 +35,7 @@ export const RegisterForm = () => {
       <UserNameField />
       <EmailField />
       <PasswordField />
-      <ClassicButton type="submit">
+      <ClassicButton type="submit" to={'/login'}>
         Register
         <Assignment sx={{ marginLeft: '5px' }} />
       </ClassicButton>
