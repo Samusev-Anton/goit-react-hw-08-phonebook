@@ -32,14 +32,11 @@ export const ChangePasswordForm = ({ isCloseModal }) => {
   const temp = useSelector(tempPassword);
   const activateChangePassword = temp === temporaryPassword;
   const activeSubmitPassword = newPassword === doublePassword;
-  // const reset = () => {
-  //   setNewPassword('');
-  //   setDoublePassword('');
-  //   setEmail('');
-  // };
 
   const handleSubmitSendEmail = e => {
     e.preventDefault();
+    e.stopPropagation();
+
     const email = e.currentTarget.elements.email.value;
     setEmail(email);
     dispatch(SendMailPassword(email));
@@ -49,6 +46,7 @@ export const ChangePasswordForm = ({ isCloseModal }) => {
 
   const onSubmitForm = event => {
     event.preventDefault();
+    event.stopPropagation();
     const form = event.currentTarget;
     console.log(form);
     const newPassword = {

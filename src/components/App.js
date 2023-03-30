@@ -10,6 +10,7 @@ import { Login } from 'pages/Login';
 import { VerifyUser } from 'pages/VerifyEmail';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { Messanger } from './Messenger/messenger';
 
 import { GlobalStyle } from './GlobalStyles';
 import { ToastContainer } from 'react-toastify';
@@ -36,8 +37,6 @@ export const App = () => {
     };
   }, [dispatch]);
 
-  // const verify = useSelector(verifyToken);
-
   return (
     !isRefreshing && (
       <>
@@ -63,6 +62,7 @@ export const App = () => {
               }
             />
             <Route path="/verify/:verifyToken" element={<VerifyUser />} />
+            <Route path="/messanger" element={<Messanger />} />
             <Route path="*" element={<Error errorImg={img} />} />
           </Route>
         </Routes>

@@ -59,7 +59,7 @@ export const ChangeContactForm = ({ changedContact, isCloseModal }) => {
       <ClassicLabelForm style={{ color: 'black' }}>
         Email
         <ClassicInputForm
-          onClick={event => setName('')}
+          onClick={event => setEmail('')}
           type="text"
           name="email"
           // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -74,7 +74,7 @@ export const ChangeContactForm = ({ changedContact, isCloseModal }) => {
       <ClassicLabelForm style={{ color: 'black' }}>
         Number
         <ClassicInputForm
-          onClick={event => setName('')}
+          onClick={event => setNumber('')}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
