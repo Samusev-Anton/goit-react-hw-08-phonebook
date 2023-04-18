@@ -5,8 +5,9 @@ import {
   toastSuccessDelete,
   toastError,
 } from 'components/services/toasts';
+import { baseAxiosURL } from './baseUrl';
 
-axios.defaults.baseURL = 'http://localhost:3030/api';
+axios.defaults.baseURL = baseAxiosURL;
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
@@ -24,11 +25,9 @@ export const fetchContacts = createAsyncThunk(
 export const addNewContact = createAsyncThunk(
   'contacts/addNewContact',
   async (credentials, thunkApi) => {
-    console.log(credentials);
     try {
       const contacts = await axios.post('/contacts', credentials);
       toastSuccessAdd();
-      console.log(contacts.data.data);
       return contacts.data.data;
     } catch (error) {
       toastError();
@@ -72,7 +71,6 @@ export const addToFavorite = createAsyncThunk(
 export const changeContact = createAsyncThunk(
   'contacts/changeContact',
   async (contact, thunkApi) => {
-    console.log(contact.id);
     try {
       const contacts = await axios.patch(`/contacts/${contact.id}`, {
         name: contact.name,
@@ -80,7 +78,6 @@ export const changeContact = createAsyncThunk(
         email: contact.email,
       });
       toastSuccessAdd();
-      console.log(contacts.data.data);
       return contacts.data.data;
     } catch (error) {
       toastError();
